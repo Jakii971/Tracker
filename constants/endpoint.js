@@ -29,6 +29,7 @@ export const ENDPOINTS = {
   USER_PROFILE: `${API_BASE_URL}/api/users/userProfile`,
   USER_RECAP: `${API_BASE_URL}/api/user/recap`,
   USER_POST_ACTIVITY: `${API_BASE_URL}/api/user/activities`,
+  GET_ALL_USERS_ACTIVITY: `${API_BASE_URL}/api/user/activities`,
   USER_ACTIVITY_SUMMARY: `${API_BASE_URL}/api/user/activities/summary`,
   USER_LEADERBOARDS: `${API_BASE_URL}/api/users/leaderboards`,
   USER_UPDATE_PROFILE: `${API_BASE_URL}/api/users/update/profile`,

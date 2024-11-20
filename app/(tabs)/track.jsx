@@ -25,7 +25,7 @@ const Track = () => {
 	const [seconds, setSeconds] = useState(0);
 	const [distance, setDistance] = useState(0);
 	const [selectedActivity, setSelectedActivity] = useState("walk");
-	const [modalVisible, setModalVisible] = useState(false);
+	const [modalFinishVisible, setModalFinishVisible] = useState(false);
 	const [modalCompleteVisible, setModalCompleteVisible] = useState(false);
 
 	const intervalRef = useRef(null);
@@ -36,8 +36,13 @@ const Track = () => {
 	}, [distance]);
 
 	//* Post Activity
-	const postActivity = async () => {
+	const handleSave = async () => {
 		const durationInHours = seconds / 3600;
+
+		const date = new Date();
+		const utcOffsetInMs = 7 * 60 * 60 * 1000; // WIB offset (UTC+7)
+		const wibDate = new Date(date.getTime() + utcOffsetInMs);
+		const isoWIB = wibDate.toISOString().replace("Z", "+07:00");
 		try {
 			const token = await AsyncStorage.getItem("token");
 			const response = await axios.post(
@@ -46,14 +51,21 @@ const Track = () => {
 					activityType: selectedActivity,
 					distance: distance,
 					duration: durationInHours,
-					date: new Date().toISOString(),
+					date: isoWIB,
 				},
 				{
 					headers: { Authorization: `Bearer ${token}` },
 				}
 			);
 			console.log("Activity posted:", response);
+			setModalFinishVisible(false);
+			setModalCompleteVisible(true);
+			setSeconds(0);
+			setTimeout(() => {
+				setModalCompleteVisible(false);
+			}, 1500);
 		} catch (error) {
+			alert("Terjadi kesalahan saat menyimpan data.", error);
 			console.error("Error posting activity:", error);
 		}
 	};
@@ -118,18 +130,18 @@ const Track = () => {
 		stopTimer();
 		stopTracking();
 		setIsStart(false);
-		setModalVisible(true);
+		setModalFinishVisible(true);
 		console.log("Finish");
 	};
-	const handleSave = async () => {
-		await postActivity();
-		setModalVisible(false);
-		setModalCompleteVisible(true);
-		setSeconds(0);
-		setTimeout(() => {
-			setModalCompleteVisible(false);
-		}, 1500);
-	};
+	// const handleSave = async () => {
+	// 	await postActivity();
+	// 	setModalFinishVisible(false);
+	// 	setModalCompleteVisible(true);
+	// 	setSeconds(0);
+	// 	setTimeout(() => {
+	// 		setModalCompleteVisible(false);
+	// 	}, 1500);
+	// };
 
 	const handleActivitySelect = (activityType) => {
 		setSelectedActivity(activityType);
@@ -140,8 +152,8 @@ const Track = () => {
 			<Modal
 				animationType="fade"
 				transparent={true}
-				visible={modalVisible}
-				onRequestClose={() => setModalVisible(false)}
+				visible={modalFinishVisible}
+				onRequestClose={() => setModalFinishVisible(false)}
 			>
 				<View
 					className="flex-1 justify-center items-center"
@@ -175,7 +187,7 @@ const Track = () => {
 						<TouchableOpacity
 							className="bg-red-100 border-4 border-red-600 items-center p-2 rounded-xl w-2/3"
 							onPress={() => {
-								setModalVisible(false);
+								setModalFinishVisible(false);
 								setSeconds(0);
 							}}
 						>

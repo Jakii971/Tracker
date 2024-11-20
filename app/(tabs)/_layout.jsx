@@ -1,6 +1,6 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { icons } from "../../constants";
 
 const TabIcon = ({ icon, color, name, focused }) => {
@@ -55,6 +55,11 @@ const TabLayout = () => {
 				options={{
 					title: "Recap",
 					headerShown: false,
+					headerRight: () => (
+						<TouchableOpacity onPress={() => router.push("/historyActivityScreen")} className="mr-4">
+							<Image source={icons.history2} className="w-7 h-7"/>
+						</TouchableOpacity>
+					),
 					tabBarIcon: ({ color, focused }) => (
 						<TabIcon
 							icon={icons.recap}

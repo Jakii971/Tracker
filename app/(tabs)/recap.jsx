@@ -1,12 +1,14 @@
 import { View, Text, SafeAreaView, Image } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import AppIntroSlider from "react-native-app-intro-slider";
-import { API_BASE_URL, ENDPOINTS } from "../../constants/endpoint";
+import { ENDPOINTS } from "../../constants/endpoint";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { images } from "../../constants";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { icons } from "../../constants";
 
 const getActivityImage = (activityType) => {
 	switch (activityType) {
@@ -32,7 +34,6 @@ const Recap = () => {
 			},
 		});
 		const summary = await response.data;
-		// console.log("Summary Recap= ", JSON.stringify(summary, null, 2));
 		setSummary(summary);
 	};
 
@@ -94,13 +95,21 @@ const Recap = () => {
 	}
 
 	return (
-		<AppIntroSlider
-			data={summary}
-			renderItem={renderItem}
-			activeDotStyle={{ backgroundColor: "#FBBA18", width: 30 }}
-			showNextButton={false}
-			showDoneButton={false}
-		/>
+		<>
+			<TouchableOpacity
+				onPress={() => router.push("/historyActivityScreen")}
+				className="absolute right-4 bottom-7 z-10 bg-white p-3 rounded-full"
+			>
+				<Image source={icons.history2} className="w-7 h-7" />
+			</TouchableOpacity>
+			<AppIntroSlider
+				data={summary}
+				renderItem={renderItem}
+				activeDotStyle={{ backgroundColor: "#FBBA18", width: 30 }}
+				showNextButton={false}
+				showDoneButton={false}
+			/>
+		</>
 	);
 };
 

@@ -7,14 +7,10 @@ import { PersistGate } from "redux-persist/integration/react";
 import { UserProvider } from "../Context/useAuth";
 import { store, persistor } from "../redux/store";
 import { Text } from "react-native";
-import messaging from "@react-native-firebase/messaging";
 
 
 SplashScreen.preventAutoHideAsync();
 
-messaging().onMessage((remoteMessage) => {
-  console.log("FCM Message: ", remoteMessage);
-})
 
 const RootLayout = () => {
 	const [fontsLoaded, error] = useFonts({
@@ -48,6 +44,7 @@ const RootLayout = () => {
 							options={{ title: "Notification" }}
 						/>
 						<Stack.Screen name="searchScreen" options={{ title: "Search" }} />
+						<Stack.Screen name="historyActivityScreen" options={{ title: "History" }} />
 						<Stack.Screen
 							name="updateProfileScreen"
 							options={{ headerShown: false }}

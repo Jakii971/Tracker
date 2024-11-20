@@ -59,7 +59,6 @@ export default function Index() {
 		});
 
 		const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-			Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
 			console.log("A new FCM message arrived!", JSON.stringify(remoteMessage));
 			const date = new Date
 

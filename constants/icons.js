@@ -20,7 +20,11 @@ import search from "../assets/icons/search.png";
 import star from "../assets/icons/star.png";
 import walk from "../assets/icons/walk.png";
 import world from "../assets/icons/world.png";
+import history from "../assets/icons/history.png";
+import history2 from "../assets/icons/history2.png";
+import jarak from "../assets/icons/jarak.png";
+import time from "../assets/icons/time.png";
 
 
 
-export default { eyeHide, eye, home, recap, track, profile, back, bicycle, company, contact, divisi, edit, email, notification, nrp, pause, play, run, search, star, walk, world };
+export default { eyeHide, eye, home, recap, track, profile, back, bicycle, company, contact, divisi, edit, email, notification, nrp, pause, play, run, search, star, walk, world, history, history2, time, jarak };

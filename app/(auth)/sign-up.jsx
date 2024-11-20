@@ -20,8 +20,8 @@ const SignUp = () => {
 			await registerUser(username, email, password);
 			console.log("User Registered!");
 		} catch (error) {
-			alert(error);
-			console.error("Register error",error);
+			alert(error.message);
+			console.error("Register error",error.message);
 		} finally {
 			setIsLoading(false);
 		}

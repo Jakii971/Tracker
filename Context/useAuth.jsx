@@ -71,8 +71,9 @@ export const UserProvider = ({ children }) => {
 				console.log("login");
 				router.push("/home");
 			}
-		} catch (err) {
-			throw err;
+		} catch (error) {
+			console.error(error.message);
+			throw error;
 		}
 	};
 
